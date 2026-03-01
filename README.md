@@ -1,5 +1,9 @@
 # Hi there 👋 I'm mangoo-wq
 
+<p align="left">
+  <img src="./assets/avatar.svg" width="96" alt="profile avatar" />
+</p>
+
 I like turning messy problems into practical products.
 Lately I'm building around **AI Briefing**, **AX (Agent Experience)**, and lightweight automation workflows.
 
