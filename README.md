@@ -1,34 +1,17 @@
-# Hi there 👋 I'm mangoo-wq
+## hey, i'm mangoo 👋
 
-<p align="left">
-  <img src="./assets/avatar.svg" width="96" alt="profile avatar" />
-</p>
+I build small things, ship them fast, and keep whatever actually helps in real life.
 
-I like turning messy problems into practical products.
-Lately I'm building around **AI Briefing**, **AX (Agent Experience)**, and lightweight automation workflows.
+right now:
+- `ai-briefing-poc` — a daily AI + market morning brief
+- tiny automation tools for decision-making
+- experiments that can turn into real products
 
----
+tech stack:
+- Python / JavaScript / Node.js
+- GitHub Actions
 
-### 🧠 What I'm working on
-- `ai-briefing-poc` — daily AI news brief + NASDAQ impact + one action
-- Personal decision-support and productivity automation experiments
-- Small tools that feel "annoying to live without"
+rule of thumb:
+- less talk, more shipping
 
-### 🛠 Tech I use
-![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-333333?style=flat&logo=javascript&logoColor=F7DF1E)
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=nodedotjs&logoColor=white)
-![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat&logo=githubactions&logoColor=white)
-
-### 📌 Philosophy
-- Ship fast, validate small, iterate immediately.
-- Trust execution loops over perfect ideas.
-- Build tools that become part of daily workflow.
-
-### 📫 Contact
-- X/Twitter: coming soon
-- Email: coming soon
-
----
-
-> Build small. Ship often. Learn fast.
+> trying to build products people miss when they're gone.
