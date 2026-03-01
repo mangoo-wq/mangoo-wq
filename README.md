@@ -1,17 +1,20 @@
 ## hey, i'm mangoo 👋
 
-I build small things, ship them fast, and keep whatever actually helps in real life.
+I build practical products around AI, automation, and workflows.
+Not chasing hype — just shipping useful things, fast.
 
-right now:
-- `ai-briefing-poc` — a daily AI + market morning brief
-- tiny automation tools for decision-making
-- experiments that can turn into real products
+### focus areas
+- AI-native product experiments
+- automation that removes repetitive work
+- decision-support tools for builders and operators
 
-tech stack:
-- Python / JavaScript / Node.js
-- GitHub Actions
+### currently building
+- `ai-briefing-poc` (daily AI + market brief)
+- small tools that can grow into standalone products
 
-rule of thumb:
-- less talk, more shipping
+### working style
+- test small
+- ship quickly
+- keep what works
 
-> trying to build products people miss when they're gone.
+> build things people actually keep using.
