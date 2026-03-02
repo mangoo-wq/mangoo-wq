@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>mangoo blog</title>
+    <link>https://mangoo-wq.github.io/mangoo-wq/</link>
+    <description>Less hype, more throughput.</description>
+    <item>
+      <title>SOP Before Automation</title>
+      <link>https://mangoo-wq.github.io/mangoo-wq/posts/2026-03-03-sop-before-automation.html</link>
+      <pubDate>Tue, 03 Mar 2026 00:00:00 +0900</pubDate>
+    </item>
+    <item>
+      <title>Less Hype, More Throughput</title>
+      <link>https://mangoo-wq.github.io/mangoo-wq/posts/2026-03-02-less-hype-more-throughput.html</link>
+      <pubDate>Mon, 02 Mar 2026 00:00:00 +0900</pubDate>
+    </item>
+  </channel>
+</rss>
