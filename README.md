@@ -1,31 +1,34 @@
 ## hey, i'm mangoo 👋
 
-I build practical products around AI, automation, and workflows.
-Not chasing hype — just shipping useful things, fast.
+I build practical products around AI, automation, and workflow systems.
+Less hype, more measurable throughput.
 
-### focus areas
+### what i work on
 - AI-native product experiments
-- automation that removes repetitive work
-- decision-support tools for builders and operators
+- automation for repetitive operator work
+- decision-support tools for builders
 
-### now shipping
-- `ai-briefing-poc` — daily AI + market brief (08:00 KST)
-- `sop-as-code` — repeatable operating playbooks
-- TypeScript micro-tools for daily execution speed
+### current build track (W10)
+- `ai-briefing-poc` — daily AI + market brief at 08:00 KST
+- `sop-as-code` — repeatable operation playbooks
+- profile publishing system — weekly posts with measurable outcomes
 
-### operating principles
-- default to simple systems (cron + scripts > heavy tooling)
-- optimize for repeatability, not novelty
-- turn every routine into a measurable process
-- ship weekly, document continuously
+### proof, not claims
+- shipping cadence: weekly
+- reporting format: `done / in-progress / next action`
+- post standard: every post includes at least one measurable item
 
-### this sprint (14 days)
-- deliver one action-ready morning brief format
-- publish 4 high-leverage SOPs used in real workflow
-- ship one small TypeScript utility with docs
+### now publishing
+- Less Hype, More Throughput (2026-03-02)
+- SOP as Code, Week 1: What Actually Broke (2026-03-06)
+
+### principles
+- simple systems first (cron + scripts > heavy stacks)
+- repeatability over novelty
+- if it cannot produce one concrete action, it gets rewritten
 
 ### collaboration
-If you care about reliable execution systems, workflow automation, or practical AI ops,
+If you care about execution systems that survive real constraints,
 let’s build something useful.
 
 > build things people actually keep using.
