@@ -20,6 +20,9 @@
     .btn{margin-top:14px;display:inline-block;padding:12px 16px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--accent),#9d8cff);color:#08102a;font-weight:700;cursor:pointer}
     .link{color:var(--muted);text-decoration:none}
     .tip{font-size:13px;color:var(--muted);margin-top:8px}
+    .help{background:#0e1530;border:1px dashed #40528a;border-radius:10px;padding:12px;margin-top:10px}
+    .help b{display:block;margin-bottom:6px}
+    .help a{color:#b9c3e6}
   </style>
 </head>
 <body>
@@ -28,6 +31,11 @@
     <section class="card">
       <h1>3분 진단 신청</h1>
       <p class="muted">입력 후 "신청 제출"을 누르면 내용이 복사되고 문의 채널로 이동합니다. (공개 저장소에 신청 정보를 남기지 않습니다)</p>
+      <div class="help">
+        <b>문의 채널 (둘 중 하나로 전송)</b>
+        1) Telegram: <a href="https://t.me/mangooes_bot" target="_blank" rel="noreferrer">@mangooes_bot</a><br/>
+        2) Email: <a href="mailto:mangoo.wq@gmail.com">mangoo.wq@gmail.com</a>
+      </div>
     </section>
 
     <form id="riskForm" class="card">
@@ -78,7 +86,7 @@
       <textarea name="note" placeholder="현재 가장 걱정되는 운영 리스크 1개"></textarea>
 
       <button type="submit" class="btn">신청 제출</button>
-      <p class="tip">신청 내용이 클립보드에 복사됩니다. 이후 문의 채널에 그대로 붙여넣어 보내주세요.</p>
+      <p class="tip">제출 순서: ①복사 완료 알림 확인 → ②문의 채널 열기 → ③붙여넣어 전송</p>
     </form>
   </main>
 
@@ -108,11 +116,18 @@
         `추가 메모: ${note || '-'}`
       ].join('\n');
 
+      let copied = false;
       try {
         await navigator.clipboard.writeText(body);
-        alert('신청 내용이 복사되었습니다. 문의 채널에 붙여넣어 전송해주세요.');
+        copied = true;
       } catch (_) {
-        alert('자동 복사에 실패했습니다. 아래 문의 채널에 수동으로 전달해주세요.');
+        copied = false;
+      }
+
+      if (copied) {
+        alert('✅ 신청 내용 복사 완료\n\n다음 단계:\n1) Telegram @mangooes_bot 열기\n2) 붙여넣기\n3) 전송\n\n(대안: mangoo.wq@gmail.com 으로 메일 전송)');
+      } else {
+        alert('⚠️ 자동 복사 실패\n\n아래 채널 중 하나로 직접 보내주세요:\n- Telegram @mangooes_bot\n- Email mangoo.wq@gmail.com');
       }
 
       window.open('https://t.me/mangooes_bot', '_blank', 'noopener,noreferrer');
