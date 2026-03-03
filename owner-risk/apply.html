@@ -27,7 +27,7 @@
     <a href="./index.html" class="link">← 랜딩으로 돌아가기</a>
     <section class="card">
       <h1>3분 진단 신청</h1>
-      <p class="muted">입력 후 "신청 제출"을 누르면 GitHub 이슈 폼이 열립니다. (파일럿 접수 방식)</p>
+      <p class="muted">입력 후 "신청 제출"을 누르면 내용이 복사되고 문의 채널로 이동합니다. (공개 저장소에 신청 정보를 남기지 않습니다)</p>
     </section>
 
     <form id="riskForm" class="card">
@@ -78,12 +78,12 @@
       <textarea name="note" placeholder="현재 가장 걱정되는 운영 리스크 1개"></textarea>
 
       <button type="submit" class="btn">신청 제출</button>
-      <p class="tip">제출 후 열리는 페이지에서 "Create issue"를 누르면 접수 완료됩니다.</p>
+      <p class="tip">신청 내용이 클립보드에 복사됩니다. 이후 문의 채널에 그대로 붙여넣어 보내주세요.</p>
     </form>
   </main>
 
   <script>
-    document.getElementById('riskForm').addEventListener('submit', function (e) {
+    document.getElementById('riskForm').addEventListener('submit', async function (e) {
       e.preventDefault();
       const f = e.target;
       const get = (n) => (f.elements[n]?.value || '').trim();
@@ -96,28 +96,26 @@
       const email = get('email');
       const note = get('note');
 
-      const title = `[OwnerRisk Pilot] ${company} / ${industry}`;
       const body = [
-        '## Owner-Dependency Scanner 신청',
-        `- 회사/브랜드명: ${company}`,
-        `- 업종: ${industry}`,
-        `- 팀 규모: ${teamSize}`,
-        `- 대표 3일 부재 시 멈추는 업무: ${criticalTask}`,
-        `- 하루 손실 추정: ${dailyLoss}`,
-        `- 문서화 수준(1~10): ${docLevel}`,
-        `- 결과 수신 이메일: ${email}`,
-        `- 추가 메모: ${note || '-'}`,
-        '',
-        '---',
-        '자동 생성: owner-risk/apply.html'
+        '[Owner-Risk 파일럿 신청]',
+        `회사/브랜드명: ${company}`,
+        `업종: ${industry}`,
+        `팀 규모: ${teamSize}`,
+        `대표 3일 부재 시 멈추는 업무: ${criticalTask}`,
+        `하루 손실 추정: ${dailyLoss}`,
+        `문서화 수준(1~10): ${docLevel}`,
+        `결과 수신 이메일: ${email}`,
+        `추가 메모: ${note || '-'}`
       ].join('\n');
 
-      const url = 'https://github.com/mangoo-wq/mangoo-wq/issues/new'
-        + '?title=' + encodeURIComponent(title)
-        + '&body=' + encodeURIComponent(body)
-        + '&labels=' + encodeURIComponent('owner-risk,pilot');
+      try {
+        await navigator.clipboard.writeText(body);
+        alert('신청 내용이 복사되었습니다. 문의 채널에 붙여넣어 전송해주세요.');
+      } catch (_) {
+        alert('자동 복사에 실패했습니다. 아래 문의 채널에 수동으로 전달해주세요.');
+      }
 
-      window.open(url, '_blank', 'noopener,noreferrer');
+      window.open('https://t.me/mangooes_bot', '_blank', 'noopener,noreferrer');
     });
   </script>
 </body>
