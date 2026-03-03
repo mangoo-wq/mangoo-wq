@@ -17,6 +17,7 @@ Less hype, more measurable throughput.
 - shipping cadence: weekly
 - reporting format: `done / in-progress / next action`
 - post standard: every post includes at least one measurable item
+- live proof board: [`proof-of-work.md`](./proof-of-work.md)
 
 ### now publishing
 - Less Hype, More Throughput (2026-03-02)
