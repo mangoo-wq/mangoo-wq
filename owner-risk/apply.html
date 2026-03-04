@@ -23,6 +23,11 @@
     .help{background:#0e1530;border:1px dashed #40528a;border-radius:10px;padding:12px;margin-top:10px}
     .help b{display:block;margin-bottom:6px}
     .help a{color:#b9c3e6}
+    .next{display:none;background:#0e1530;border:1px solid #40528a;border-radius:12px;padding:14px;margin-top:14px}
+    .next.show{display:block}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .btn2{display:inline-block;padding:10px 12px;border-radius:10px;border:1px solid #4e6198;color:var(--text);text-decoration:none;font-weight:600}
+    .status{font-size:13px;color:#b9c3e6;margin-top:8px}
   </style>
 </head>
 <body>
@@ -86,51 +91,68 @@
       <textarea name="note" placeholder="현재 가장 걱정되는 운영 리스크 1개"></textarea>
 
       <button type="submit" class="btn">신청 제출</button>
-      <p class="tip">제출 순서: ①복사 완료 알림 확인 → ②문의 채널 열기 → ③붙여넣어 전송</p>
+      <p class="tip">제출 순서: ①신청 제출 → ②복사 상태 확인 → ③채널 버튼 눌러 전송</p>
+
+      <div id="nextStep" class="next" aria-live="polite">
+        <b>마지막 1단계: 아래 버튼으로 전송해 주세요</b>
+        <div class="actions">
+          <a id="tgLink" class="btn2" href="https://t.me/mangooes_bot" target="_blank" rel="noreferrer">Telegram 열기</a>
+          <a id="mailLink" class="btn2" href="mailto:mangoo.wq@gmail.com">Email 열기</a>
+          <button id="copyBtn" type="button" class="btn2">다시 복사</button>
+        </div>
+        <div id="copyStatus" class="status">복사 대기 중</div>
+        <textarea id="payload" readonly style="margin-top:10px;min-height:140px"></textarea>
+      </div>
     </form>
   </main>
 
   <script>
-    document.getElementById('riskForm').addEventListener('submit', async function (e) {
+    const form = document.getElementById('riskForm');
+    const nextStep = document.getElementById('nextStep');
+    const payload = document.getElementById('payload');
+    const copyBtn = document.getElementById('copyBtn');
+    const copyStatus = document.getElementById('copyStatus');
+    const mailLink = document.getElementById('mailLink');
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        copyStatus.textContent = '✅ 신청 내용 복사 완료. Telegram 또는 Email 버튼을 눌러 전송해 주세요.';
+      } catch (_) {
+        copyStatus.textContent = '⚠️ 자동 복사 실패. 아래 텍스트를 수동 복사해서 전송해 주세요.';
+      }
+    }
+
+    form.addEventListener('submit', async function (e) {
       e.preventDefault();
       const f = e.target;
       const get = (n) => (f.elements[n]?.value || '').trim();
-      const company = get('company');
-      const industry = get('industry');
-      const teamSize = get('teamSize');
-      const criticalTask = get('criticalTask');
-      const dailyLoss = get('dailyLoss');
-      const docLevel = get('docLevel');
-      const email = get('email');
-      const note = get('note');
 
       const body = [
         '[Owner-Risk 파일럿 신청]',
-        `회사/브랜드명: ${company}`,
-        `업종: ${industry}`,
-        `팀 규모: ${teamSize}`,
-        `대표 3일 부재 시 멈추는 업무: ${criticalTask}`,
-        `하루 손실 추정: ${dailyLoss}`,
-        `문서화 수준(1~10): ${docLevel}`,
-        `결과 수신 이메일: ${email}`,
-        `추가 메모: ${note || '-'}`
+        `회사/브랜드명: ${get('company')}`,
+        `업종: ${get('industry')}`,
+        `팀 규모: ${get('teamSize')}`,
+        `대표 3일 부재 시 멈추는 업무: ${get('criticalTask')}`,
+        `하루 손실 추정: ${get('dailyLoss')}`,
+        `문서화 수준(1~10): ${get('docLevel')}`,
+        `결과 수신 이메일: ${get('email')}`,
+        `추가 메모: ${get('note') || '-'}`
       ].join('\n');
 
-      let copied = false;
-      try {
-        await navigator.clipboard.writeText(body);
-        copied = true;
-      } catch (_) {
-        copied = false;
-      }
+      payload.value = body;
+      nextStep.classList.add('show');
 
-      if (copied) {
-        alert('✅ 신청 내용 복사 완료\n\n다음 단계:\n1) Telegram @mangooes_bot 열기\n2) 붙여넣기\n3) 전송\n\n(대안: mangoo.wq@gmail.com 으로 메일 전송)');
-      } else {
-        alert('⚠️ 자동 복사 실패\n\n아래 채널 중 하나로 직접 보내주세요:\n- Telegram @mangooes_bot\n- Email mangoo.wq@gmail.com');
-      }
+      const subject = encodeURIComponent('[Owner-Risk] 파일럿 신청');
+      const mailBody = encodeURIComponent(body);
+      mailLink.href = `mailto:mangoo.wq@gmail.com?subject=${subject}&body=${mailBody}`;
 
-      window.open('https://t.me/mangooes_bot', '_blank', 'noopener,noreferrer');
+      await copyText(body);
+      nextStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    copyBtn.addEventListener('click', async function () {
+      await copyText(payload.value || '');
     });
   </script>
 </body>
