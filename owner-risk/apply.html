@@ -114,6 +114,35 @@
     const copyStatus = document.getElementById('copyStatus');
     const mailLink = document.getElementById('mailLink');
 
+    function nowKstString() {
+      return new Date().toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' }).replace(' ', ' ');
+    }
+
+    function makeSubmissionId() {
+      return `OR-${Date.now()}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
+    }
+
+    let latestContext = null;
+
+    function buildPayload(channel = 'pending') {
+      if (!latestContext) return '';
+      const c = latestContext;
+      return [
+        '[Owner-Risk 파일럿 신청]',
+        `신청ID: ${c.submissionId}`,
+        `제출시각(KST): ${c.submittedAt}`,
+        `전송채널: ${channel}`,
+        `회사/브랜드명: ${c.company}`,
+        `업종: ${c.industry}`,
+        `팀 규모: ${c.teamSize}`,
+        `대표 3일 부재 시 멈추는 업무: ${c.criticalTask}`,
+        `하루 손실 추정: ${c.dailyLoss}`,
+        `문서화 수준(1~10): ${c.docLevel}`,
+        `결과 수신 이메일: ${c.email}`,
+        `추가 메모: ${c.note || '-'}`
+      ].join('\n');
+    }
+
     async function copyText(text) {
       try {
         await navigator.clipboard.writeText(text);
@@ -128,27 +157,45 @@
       const f = e.target;
       const get = (n) => (f.elements[n]?.value || '').trim();
 
-      const body = [
-        '[Owner-Risk 파일럿 신청]',
-        `회사/브랜드명: ${get('company')}`,
-        `업종: ${get('industry')}`,
-        `팀 규모: ${get('teamSize')}`,
-        `대표 3일 부재 시 멈추는 업무: ${get('criticalTask')}`,
-        `하루 손실 추정: ${get('dailyLoss')}`,
-        `문서화 수준(1~10): ${get('docLevel')}`,
-        `결과 수신 이메일: ${get('email')}`,
-        `추가 메모: ${get('note') || '-'}`
-      ].join('\n');
+      latestContext = {
+        submissionId: makeSubmissionId(),
+        submittedAt: nowKstString(),
+        company: get('company'),
+        industry: get('industry'),
+        teamSize: get('teamSize'),
+        criticalTask: get('criticalTask'),
+        dailyLoss: get('dailyLoss'),
+        docLevel: get('docLevel'),
+        email: get('email'),
+        note: get('note')
+      };
 
+      const body = buildPayload('pending');
       payload.value = body;
       nextStep.classList.add('show');
 
       const subject = encodeURIComponent('[Owner-Risk] 파일럿 신청');
-      const mailBody = encodeURIComponent(body);
+      const mailBody = encodeURIComponent(buildPayload('email'));
       mailLink.href = `mailto:mangoo.wq@gmail.com?subject=${subject}&body=${mailBody}`;
 
       await copyText(body);
       nextStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    document.getElementById('tgLink').addEventListener('click', async function () {
+      const body = buildPayload('telegram');
+      if (body) {
+        payload.value = body;
+        await copyText(body);
+      }
+    });
+
+    document.getElementById('mailLink').addEventListener('click', async function () {
+      const body = buildPayload('email');
+      if (body) {
+        payload.value = body;
+        await copyText(body);
+      }
     });
 
     copyBtn.addEventListener('click', async function () {
